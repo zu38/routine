@@ -1,52 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Schedule Management System</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <h1>📚 Teacher Schedule Management</h1>
+<section class="card">
+    <h2>Add Schedule</h2>
+    <select id="teacherSelect"></select><br><br>
 
-        <section class="card">
-            <h2>Add Teacher</h2>
-            <input type="text" id="teacherName" placeholder="Teacher Name">
-            <button onclick="addTeacher()">➕ Add Teacher</button>
-        </section>
+    <input type="text" id="subject" placeholder="Subject Name"><br><br>
 
-        <section class="card">
-            <h2>Add Schedule</h2>
-            <select id="teacherSelect"></select><br><br>
-            <input type="text" id="subject" placeholder="Subject Name"><br><br>
-            <input type="text" id="semester" placeholder="Semester"><br><br>
-            <input type="text" id="day" placeholder="Day (Monday to Friday)"><br><br>
-            <input type="time" id="startTime">
-            <input type="time" id="endTime"><br><br>
-            <button onclick="addSchedule()">🗓️ Add Schedule</button>
-        </section>
+    <select id="semester">
+        <option value="">-- Select Semester --</option>
+        <option>One</option>
+        <option>Two</option>
+        <option>Three</option>
+        <option>Four</option>
+        <option>Five</option>
+        <option>Six</option>
+        <option>Seven</option>
+        <option>Eight</option>
+    </select><br><br>
 
-        <section class="card">
-            <h2>📋 View Schedule</h2>
-            <table id="scheduleTable">
-                <thead>
-                    <tr>
-                        <th>Teacher</th>
-                        <th>Subject</th>
-                        <th>Semester</th>
-                        <th>Day</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- dynamic rows -->
-                </tbody>
-            </table>
-        </section>
-    </div>
+    <select id="day">
+        <option value="">-- Select Day --</option>
+        <option>Sunday</option>
+        <option>Monday</option>
+        <option>Tuesday</option>
+        <option>Wednesday</option>
+        <option>Thursday</option>
+    </select><br><br>
 
-    <script src="script.js"></script>
-</body>
-</html>
+    <input type="time" id="startTime">
+    <input type="time" id="endTime"><br><br>
+
+    <button onclick="addSchedule()">🗓️ Add Schedule</button>
+</section>
