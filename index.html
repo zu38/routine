@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Schedule Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>📚 Teacher Schedule Management</h1>
+
+    <section id="add-teacher">
+        <h2>Add Teacher</h2>
+        <input type="text" id="teacherName" placeholder="Teacher Name">
+        <button onclick="addTeacher()">Add Teacher</button>
+    </section>
+
+    <section id="add-schedule">
+        <h2>Add Schedule</h2>
+        <select id="teacherSelect"></select><br><br>
+        <input type="text" id="subject" placeholder="Subject"><br><br>
+        <input type="text" id="semester" placeholder="Semester"><br><br>
+        <input type="text" id="day" placeholder="Day (e.g. Monday)"><br><br>
+        <input type="time" id="startTime">
+        <input type="time" id="endTime"><br><br>
+        <button onclick="addSchedule()">Add Schedule</button>
+    </section>
+
+    <section id="schedule-list">
+        <h2>📋 View Schedule</h2>
+        <table id="scheduleTable">
+            <thead>
+                <tr>
+                    <th>Teacher</th>
+                    <th>Subject</th>
+                    <th>Semester</th>
+                    <th>Day</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Schedules appear here -->
+            </tbody>
+        </table>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
