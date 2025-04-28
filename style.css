@@ -75,11 +75,45 @@ td button:hover {
     opacity: 0.9;
 }
 
-@media (max-width: 768px) {
-    table, thead, tbody, th, td, tr {
-        display: block;
-    }
-    th, td {
-        text-align: right;
-    }
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.calendar-grid div {
+    background: #eef;
+    padding: 10px;
+    min-height: 120px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.calendar-grid div h4 {
+    text-align: center;
+    color: #007bff;
+}
+
+.dark-mode {
+    background: #181818;
+    color: #f5f5f5;
+}
+
+.dark-mode .card {
+    background: #252525;
+    box-shadow: 0 4px 8px rgba(255,255,255,0.1);
+}
+
+.dark-mode table th {
+    background: #333;
+}
+
+.dark-mode input, .dark-mode select, .dark-mode button {
+    background: #333;
+    color: #f5f5f5;
+    border: 1px solid #666;
+}
+
+.dark-mode .calendar-grid div {
+    background: #333;
 }
