@@ -56,6 +56,7 @@
             <button onclick="sortSchedulesByDay()">Sort by Day</button>
             <button onclick="sortSchedulesByTime()">Sort by Start Time</button>
             <button onclick="exportToExcel()">📄 Export to Excel</button>
+            <button onclick="exportToPDF()">📄 Export to PDF</button>
 
             <table id="scheduleTable">
                 <thead>
@@ -73,6 +74,15 @@
                     <!-- dynamic rows -->
                 </tbody>
             </table>
+        </section>
+
+        <section class="card">
+            <h2>🗓️ Weekly Calendar View</h2>
+            <div id="calendarView" class="calendar-grid"></div>
+        </section>
+
+        <section class="card">
+            <button onclick="toggleDarkMode()">🌗 Toggle Dark Mode</button>
         </section>
     </div>
 
