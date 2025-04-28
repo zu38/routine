@@ -8,17 +8,23 @@ function saveData() {
 
 function addTeacher() {
     const name = document.getElementById('teacherName').value.trim();
-    if (name) {
-        teachers.push(name);
-        saveData();
-        populateTeachers();
-        document.getElementById('teacherName').value = '';
+    if (!name) {
+        alert("⚠️ Please enter a teacher's name.");
+        return;
     }
+    if (teachers.includes(name)) {
+        alert("⚠️ This teacher already exists.");
+        return;
+    }
+    teachers.push(name);
+    saveData();
+    populateTeachers();
+    document.getElementById('teacherName').value = '';
 }
 
 function populateTeachers() {
     const select = document.getElementById('teacherSelect');
-    select.innerHTML = '';
+    select.innerHTML = '<option value="">-- Select a Teacher --</option>';
     teachers.forEach((teacher, index) => {
         const option = document.createElement('option');
         option.value = index;
@@ -35,31 +41,38 @@ function addSchedule() {
     const startTime = document.getElementById('startTime').value;
     const endTime = document.getElementById('endTime').value;
 
-    if (!subject || !semester || !day || !startTime || !endTime) {
-        alert("Please fill all fields!");
+    // Validate form
+    if (!teacherId || !subject || !semester || !day || !startTime || !endTime) {
+        alert("⚠️ Please fill all fields properly.");
+        return;
+    }
+    if (startTime >= endTime) {
+        alert("⚠️ Start time must be before end time.");
         return;
     }
 
-    // Check for overlap
-    const overlap = schedules.some(s => 
+    // Check overlap: for all, AND specifically for same teacher
+    const overlap = schedules.some(s =>
         s.day.toLowerCase() === day.toLowerCase() &&
         (
             (startTime >= s.startTime && startTime < s.endTime) ||
             (endTime > s.startTime && endTime <= s.endTime) ||
             (startTime <= s.startTime && endTime >= s.endTime)
-        )
+        ) &&
+        (s.teacherId == teacherId)
     );
 
     if (overlap) {
-        alert("❌ Time Overlap Detected!");
+        alert("❌ Time Overlap! This teacher already has a class at that time.");
         return;
     }
 
     schedules.push({ teacherId, subject, semester, day, startTime, endTime });
     saveData();
     displaySchedules();
-    
+
     // Clear inputs
+    document.getElementById('teacherSelect').value = '';
     document.getElementById('subject').value = '';
     document.getElementById('semester').value = '';
     document.getElementById('day').value = '';
@@ -80,7 +93,10 @@ function displaySchedules() {
             <td>${s.day}</td>
             <td>${s.startTime}</td>
             <td>${s.endTime}</td>
-            <td><button onclick="editSchedule(${index})">✏️ Edit</button> <button onclick="deleteSchedule(${index})">🗑️ Delete</button></td>
+            <td>
+                <button style="background:#ffa500;" onclick="editSchedule(${index})">✏️ Edit</button>
+                <button style="background:#e60000;" onclick="deleteSchedule(${index})">🗑️ Delete</button>
+            </td>
         `;
         tbody.appendChild(row);
     });
@@ -104,12 +120,12 @@ function editSchedule(index) {
     document.getElementById('startTime').value = s.startTime;
     document.getElementById('endTime').value = s.endTime;
 
-    // Remove old schedule to allow updating
+    // Remove old entry
     schedules.splice(index, 1);
     saveData();
     displaySchedules();
 }
 
-// Initialize on page load
+// Initialize
 populateTeachers();
 displaySchedules();
