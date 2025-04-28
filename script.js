@@ -69,6 +69,7 @@ function addSchedule() {
     schedules.push({ teacherId, subject, semester, day, startTime, endTime });
     saveData();
     displaySchedules();
+    updateCalendarView();
 
     document.getElementById('teacherSelect').value = '';
     document.getElementById('subject').value = '';
@@ -105,6 +106,7 @@ function deleteSchedule(index) {
         schedules.splice(index, 1);
         saveData();
         displaySchedules();
+        updateCalendarView();
     }
 }
 
@@ -121,6 +123,7 @@ function editSchedule(index) {
     schedules.splice(index, 1);
     saveData();
     displaySchedules();
+    updateCalendarView();
 }
 
 // Search
@@ -137,6 +140,7 @@ function sortSchedulesByDay() {
     schedules.sort((a, b) => a.day.localeCompare(b.day));
     saveData();
     displaySchedules();
+    updateCalendarView();
 }
 
 // Sort Time
@@ -144,15 +148,11 @@ function sortSchedulesByTime() {
     schedules.sort((a, b) => a.startTime.localeCompare(b.startTime));
     saveData();
     displaySchedules();
+    updateCalendarView();
 }
 
 // Export Excel
 function exportToExcel() {
     const table = document.getElementById('scheduleTable');
     const wb = XLSX.utils.table_to_book(table, { sheet: "Schedule" });
-    XLSX.writeFile(wb, "Teacher_Schedule.xlsx");
-}
-
-// Initial
-populateTeachers();
-displaySchedules();
+    XLSX.writeFile(wb, "Teacher
