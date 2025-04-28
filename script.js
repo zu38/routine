@@ -36,12 +36,11 @@ function populateTeachers() {
 function addSchedule() {
     const teacherId = document.getElementById('teacherSelect').value;
     const subject = document.getElementById('subject').value.trim();
-    const semester = document.getElementById('semester').value.trim();
-    const day = document.getElementById('day').value.trim();
+    const semester = document.getElementById('semester').value;
+    const day = document.getElementById('day').value;
     const startTime = document.getElementById('startTime').value;
     const endTime = document.getElementById('endTime').value;
 
-    // Validate form
     if (!teacherId || !subject || !semester || !day || !startTime || !endTime) {
         alert("⚠️ Please fill all fields properly.");
         return;
@@ -51,15 +50,15 @@ function addSchedule() {
         return;
     }
 
-    // Check overlap: for all, AND specifically for same teacher
+    // Check overlap
     const overlap = schedules.some(s =>
         s.day.toLowerCase() === day.toLowerCase() &&
+        s.teacherId == teacherId &&
         (
             (startTime >= s.startTime && startTime < s.endTime) ||
             (endTime > s.startTime && endTime <= s.endTime) ||
             (startTime <= s.startTime && endTime >= s.endTime)
-        ) &&
-        (s.teacherId == teacherId)
+        )
     );
 
     if (overlap) {
@@ -71,7 +70,6 @@ function addSchedule() {
     saveData();
     displaySchedules();
 
-    // Clear inputs
     document.getElementById('teacherSelect').value = '';
     document.getElementById('subject').value = '';
     document.getElementById('semester').value = '';
@@ -80,11 +78,11 @@ function addSchedule() {
     document.getElementById('endTime').value = '';
 }
 
-function displaySchedules() {
+function displaySchedules(filteredSchedules = schedules) {
     const tbody = document.getElementById('scheduleTable').querySelector('tbody');
     tbody.innerHTML = '';
 
-    schedules.forEach((s, index) => {
+    filteredSchedules.forEach((s, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${teachers[s.teacherId]}</td>
@@ -120,12 +118,41 @@ function editSchedule(index) {
     document.getElementById('startTime').value = s.startTime;
     document.getElementById('endTime').value = s.endTime;
 
-    // Remove old entry
     schedules.splice(index, 1);
     saveData();
     displaySchedules();
 }
 
-// Initialize
+// Search
+function filterSchedules() {
+    const query = document.getElementById('searchTeacher').value.toLowerCase();
+    const filtered = schedules.filter(s => 
+        teachers[s.teacherId].toLowerCase().includes(query)
+    );
+    displaySchedules(filtered);
+}
+
+// Sort Day
+function sortSchedulesByDay() {
+    schedules.sort((a, b) => a.day.localeCompare(b.day));
+    saveData();
+    displaySchedules();
+}
+
+// Sort Time
+function sortSchedulesByTime() {
+    schedules.sort((a, b) => a.startTime.localeCompare(b.startTime));
+    saveData();
+    displaySchedules();
+}
+
+// Export Excel
+function exportToExcel() {
+    const table = document.getElementById('scheduleTable');
+    const wb = XLSX.utils.table_to_book(table, { sheet: "Schedule" });
+    XLSX.writeFile(wb, "Teacher_Schedule.xlsx");
+}
+
+// Initial
 populateTeachers();
 displaySchedules();
